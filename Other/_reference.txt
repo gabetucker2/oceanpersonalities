@@ -1,0 +1,70 @@
+LINKS:
+Circle arc: https://www.desmos.com/calculator/5zaayijqzb
+
+COLORS:
+
+GREYS
+White: #FFFFFF
+BETWEEN: #CCC
+Light grey: #F4F4F4//background
+Medium grey: #A09598;
+Black: #000000
+
+
+BLUES
+Lightest blue: #D0F2EF
+Second lightest blue: #E6F2F0
+Third lightest blue: #8EE3F0
+Fourth lightest blue: #AFE3DF
+Fifth lightest blue: #67C1C7
+Medium blue: #1DB3CA (BEST BLUE)
+Fourth darkest blue: #1590A3 (FORMER MEDIUM)
+Third darkest blue: #167988
+Second darkest blue: #083651
+Darkest blue: #000020
+
+COLOR ARRAYS
+#AFE3DF LIGHT LIGHT
+#8EE3F0 LIGHT
+#1590A3 MED
+#167988 DARK
+
+
+WARNING
+Light: #EB3B6C
+Main: #FC0349
+Dark: #FF122E
+
+
+SLIDER
+Thumb neutral: #
+Thumb hover: #
+Neutral range: #083651
+Agree: #03FC56
+Disagree: #FC0349
+
+
+PHP DEBUGGER LINE
+echo '<script>console.log("' . $xxx . '"); debugger;</script>';
+
+
+DATE FORMAT
+date("Y-m-d H:i:s")
+
+
+RESET QUESTIONS
+TRUNCATE TABLE questions_general;
+TRUNCATE TABLE versions_general;
+TRUNCATE TABLE versions_questions;
+
+
+UPDATE COLUMN NAME
+ALTER TABLE questions_general
+CHANGE questionCorrespondant questionCorrelate INT;
+
+
+RETRIEVE COUNTRY AND IP
+
+$_SESSION["userIP"] = $_SERVER["REMOTE_ADDR"];
+$thisIPData = json_decode(file_get_contents("http://www.geoplugin.net/json.gp?ip=" . $_SESSION["userIP"]));
+$thisUserCountry = $thisIPData -> geoplugin_countryName;

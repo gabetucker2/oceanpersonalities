@@ -1,0 +1,193 @@
+##EXECUTE IN SERVER NEXT UPDATE
+
+
+
+##COMMENT HERE
+STUFF HERE
+
+
+
+#################################
+#################################
+
+#derives from database_oceanpersonalities
+
+#nd_sqli rather than sqli enabled in settings
+
+#Server Name a2plcpnl0482
+#Local User f3o7qheo722d
+#Shared IP Address 107.180.51.87
+
+#################################
+#################################
+
+BOOLEAN 0 or 1
+TINYINT up to 127
+SMALLINT up to 32,767
+MEDIUMINT up to 8,388,607
+INT up to 2,147,483,647
+BIGINT up to 549,755,813,632
+
+#################################
+#################################
+
+#################################GRANT PHP PRIVILEGES TO ACCESS SQL
+
+GRANT ALL PRIVILEGES ON *.* TO 'root'@'%';
+FLUSH PRIVILEGES
+
+
+#################################
+#################################
+
+#################################SET UP DATABASE_OCEANPERSONALITIES
+
+CREATE TABLE users_general
+(
+	userID BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL,###
+	userUsername TINYTEXT NOT NULL,
+	userFirstName TINYTEXT NOT NULL,
+	userEmail TINYTEXT NOT NULL,
+	userPassword LONGTEXT NOT NULL,
+	userAccountTime DATETIME NOT NULL,
+	OTI TINYTEXT NOT NULL,#
+	userAdmin BOOLEAN NOT NULL
+);
+
+CREATE TABLE questions_general
+(
+	questionID MEDIUMINT AUTO_INCREMENT PRIMARY KEY NOT NULL,###
+	questionCorrelate INT NOT NULL,
+	questionTrait TINYINT NOT NULL,
+	questionPositive BOOLEAN NOT NULL,
+	questionPrompt TEXT NOT NULL
+);
+
+CREATE TABLE versions_general
+(
+	versionID MEDIUMINT AUTO_INCREMENT PRIMARY KEY NOT NULL,###
+	versionNumber DOUBLE NOT NULL,
+	versionMaxValue SMALLINT NOT NULL,
+	versionTime DATETIME NOT NULL
+);
+
+CREATE TABLE versions_questions
+(
+	localID BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+	versionID MEDIUMINT NOT NULL,##
+	questionID MEDIUMINT NOT NULL##
+);
+
+CREATE TABLE tests_taken
+(
+	testTakenID BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL,###
+	userID BIGINT NOT NULL,##
+	versionID MEDIUMINT NOT NULL,##
+	OTI TINYTEXT NOT NULL,#
+	testTime DATETIME NOT NULL
+);
+
+CREATE TABLE tests_responses
+(
+	localID BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+	testTakenID BIGINT NOT NULL,##
+	questionID MEDIUMINT NOT NULL,
+	questionResponse SMALLINT NOT NULL
+);
+
+CREATE TABLE traits_general
+(
+	traitID BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+	OTI TINYTEXT NOT NULL,#
+	domainID SMALLINT NOT NULL,##
+	traitParagraph TEXT NOT NULL,
+	traitUpvotes BIGINT NOT NULL
+);
+
+CREATE TABLE traits_domains
+(
+	domainID SMALLINT AUTO_INCREMENT PRIMARY KEY NOT NULL,##
+	domainName TINYTEXT NOT NULL,
+	domainOrder SMALLINT NOT NULL,
+	domainColor TINYTEXT NOT NULL
+);
+
+CREATE TABLE traits_ocean
+(
+	localID TINYINT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+	oceanColor TINYTEXT NOT NULL,
+	oceanParagraph TEXT NOT NULL
+);
+
+CREATE TABLE types_general
+(
+	localID BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+	OTI TINYTEXT NOT NULL,#
+	typeName TINYTEXT NOT NULL
+);
+
+CREATE TABLE surveys_general
+(
+	surveyID MEDIUMINT AUTO_INCREMENT PRIMARY KEY NOT NULL,##
+	surveyName TINYTEXT NOT NULL,
+	surveyOrder TINYINT NOT NULL,
+	surveyHidden BOOLEAN NOT NULL
+);
+
+CREATE TABLE surveys_questions
+(
+	surveyQuestionID MEDIUMINT AUTO_INCREMENT PRIMARY KEY NOT NULL,##
+	surveyID MEDIUMINT NOT NULL,##
+	surveyQuestionOrder TINYINT NOT NULL,
+	surveyQuestionPrompt TEXT NOT NULL,
+	surveyQuestionTarget TEXT NOT NULL,
+	surveyQuestionIdentifier TEXT NOT NULL
+);
+
+CREATE TABLE surveys_questionanswers
+(
+	localID MEDIUMINT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+	surveyQuestionID MEDIUMINT NOT NULL,##
+	surveyAnswerID MEDIUMINT NOT NULL##
+);
+
+CREATE TABLE surveys_answers
+(
+	surveyAnswerID MEDIUMINT AUTO_INCREMENT PRIMARY KEY NOT NULL,##
+	surveyAnswerData TEXT NOT NULL,
+	surveyAnswerType TEXT NOT NULL
+);
+
+CREATE TABLE surveys_choices
+(
+	surveyChoiceID MEDIUMINT AUTO_INCREMENT PRIMARY KEY NOT NULL,##
+	surveyAnswerID MEDIUMINT NOT NULL,##
+	surveyChoiceOrder TINYINT NOT NULL,
+	surveyChoiceText TEXT NOT NULL
+);
+
+CREATE TABLE surveys_responses
+(
+	localID BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+	surveyTakenID MEDIUMINT NOT NULL,##
+	surveyQuestionID MEDIUMINT NOT NULL,##
+	surveyAnswerID MEDIUMINT NOT NULL,##
+	surveyResponse TEXT NOT NULL
+);
+
+CREATE TABLE surveys_taken
+(
+	surveyTakenID BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+	userID BIGINT NOT NULL,##
+	surveyID MEDIUMINT NOT NULL,##
+	surveyTakenTime DATETIME NOT NULL
+);
+
+CREATE TABLE votes_traits
+(
+	localID BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+	userID BIGINT NOT NULL,##
+	traitID BIGINT NOT NULL,##
+	voteIsUpvote BOOLEAN NOT NULL,
+	voteIsCurrent BOOLEAN NOT NULL
+);

@@ -1,0 +1,13 @@
+BOTH:
+
+Requires max_input_vars in php.ini (.user.ini in GoDaddy) to be higher than 1000 - namely, 9999 (this may make you vulnerable to light brute force attacks); note that the line may be commented out with a semicolon
+
+
+GoDaddy:
+
+Change in php settings regarding mysqli
+
+
+Local:
+
+Requires you import database_oceanpersonalities.sql from Other folder to phpmyadmin database entitled "database_oceanpersonalities"

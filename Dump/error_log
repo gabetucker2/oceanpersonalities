@@ -1,0 +1,11 @@
+[15-Apr-2021 15:47:10 America/New_York] PHP Notice:  Undefined index: surveyQuestionID0 in /home/f3o7qheo722d/public_html/profile.php on line 1900
+[15-Apr-2021 15:47:10 America/New_York] PHP Notice:  Undefined index: surveyAnswerID0 in /home/f3o7qheo722d/public_html/profile.php on line 2062
+[15-Apr-2021 15:47:10 America/New_York] PHP Notice:  Undefined index: surveyQuestionAnswerLID0 in /home/f3o7qheo722d/public_html/profile.php on line 2183
+[15-Apr-2021 15:47:10 America/New_York] PHP Notice:  Undefined index: surveyChoiceID0 in /home/f3o7qheo722d/public_html/profile.php on line 2315
+[15-Apr-2021 15:48:51 America/New_York] PHP Notice:  Undefined index: surveyQuestionID0 in /home/f3o7qheo722d/public_html/profile.php on line 1900
+[15-Apr-2021 15:48:51 America/New_York] PHP Notice:  Undefined index: surveyAnswerID0 in /home/f3o7qheo722d/public_html/profile.php on line 2062
+[15-Apr-2021 15:48:51 America/New_York] PHP Notice:  Undefined index: surveyQuestionAnswerLID0 in /home/f3o7qheo722d/public_html/profile.php on line 2183
+[15-Apr-2021 15:48:51 America/New_York] PHP Notice:  Undefined index: surveyChoiceID0 in /home/f3o7qheo722d/public_html/profile.php on line 2315
+[27-Apr-2021 15:32:15 America/New_York] PHP Notice:  Undefined variable: questionText in /home/f3o7qheo722d/public_html/typeDefine.php on line 283
+[27-Apr-2021 15:32:15 America/New_York] PHP Notice:  Undefined variable: questionText in /home/f3o7qheo722d/public_html/typeDefine.php on line 283
+[30-Apr-2021 08:45:50 America/New_York] PHP Notice:  Undefined variable: questionText in /home/f3o7qheo722d/public_html/typeDefine.php on line 283

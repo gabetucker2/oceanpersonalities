@@ -144,7 +144,7 @@
 
                     if (!$isFactor) {
                         $text = strtolower($faucetNames[$i%count($faucetNames)]);
-                        echo "<text x = '0' y = '0' opacity = '1' font-family = 'verdana' text-anchor = '".($i < $count/2 || $i == 15 || $i == 16 || $i == 17 ? 'start' : 'end')."' fill = '".$color."' stroke = '#000' stroke-width = '0.015vw' class = '_faucetText".$idKey."'>{$text}</text>";
+                        echo "<text x = '0' y = '0' opacity = '1' font-family = 'verdana' text-anchor = '".($i < $count/2 || $i == 15 || $i == 16 || $i == 17 ? 'start' : 'end')."' fill = '".$color."' stroke = '#000' stroke-width = '0.01vw' class = '_faucetText".$idKey."'>{$text}</text>";
                     }
                     // } else {
                     //     $text = strtoupper($factorNames[$i%count($factorNames)]);
@@ -185,7 +185,7 @@
             createArcs($factorRadii, $factorCount, $factorColors, $factorOpacity, $factorStroke, true);
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-            echo '<img src="' . $imagePath . '" alt="Image" style="pointer-events: none; position: absolute; left: '.$cx.'px; top: '.$cy + 53 .'px; width: 400px; height: 400px; transform: translate(-50%, -50%);">';
+            echo '<img src="' . $imagePath . '" alt="Image" style="pointer-events: none; position: absolute; left: '.$cx.'px; top: '. ($cy + 53) .'px; width: 400px; height: 400px; transform: translate(-50%, -50%);">';
 
         ?>
 

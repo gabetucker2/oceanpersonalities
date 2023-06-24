@@ -3,7 +3,7 @@
     <body style = "margin: 0;">
 
         <div>
-            <p onclick = "toggleContainer('saliencesContainer', -1);" style = "display: inline-block;">Toggle Saliences</p>
+            <p onclick = "toggleContainer('saliencesContainer', -1);" style = "display: inline-block;cursor: pointer;">Toggle Saliences</p>
         </div>
         
         <?PHP
@@ -32,8 +32,10 @@
             $factorColors = array(
                 "#4000FF", "#FF5500", "#FFE600", "#34EBA4", "#FF0061"
             );
-            $factorMin = 0.9; $factorMax = 1.5;
+            $factorMin = 0.8; $factorMax = 1.5;
             $factorTime = 0.3;
+            $realRadiusMax = $wholeRadius * $factorMax;
+            $realRadiusMin = $wholeRadius * $factorMin;
             // $factorNames = array(
             //     "Openness", "Conscientiousness", "Extraversion", "Agreeableness", "Neuroticism"
             // );
@@ -59,7 +61,7 @@
             $faucetMin = $factorMin; $faucetMax = $factorMax;
             $faucetTime = 0.3;//in seconds
             $faucetRadii = array();//setup later
-
+            $faucetPercents = array();
 
             //ADDITIONAL SETUP
             $angle = 0;//rotation of the ellipse relative to x axis
@@ -76,6 +78,7 @@
                 $numLevels = 100;
                 $randNum = rand(0, $numLevels - 1);
                 $percent = (($randNum)/($numLevels-1));
+                array_push($faucetPercents, $percent);
                 array_push($faucetRadii, $faucetMin + ($faucetMax - $faucetMin)*$percent);
             }
             
@@ -159,21 +162,12 @@
 
             }
 
-
-            //MAIN BODY (ordered in back to front layer)
-
-            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-            //SALIENCES
-            echo '<svg width = "100%" height = "100%" style = "position: absolute; display: block; pointer-events: none;" id = "saliencesContainer0">';
-            for ($i = 0; $i < $salienceCount; $i++) {
-                echo "<circle
-                    cx = '{$cx}' cy = '{$cy}'
-                    r = '".((($salienceMax - $salienceMin)*(($salienceCount-$i)/$salienceCount))+$salienceMin)*$wholeRadius."'
-                    fill = '{$salienceColors[$i%count($salienceColors)]}' fill-opacity = '{$salienceOpacity}'
-                    stroke = '#000' stroke-width = '{$salienceStroke}' />";
+            function lerp($min, $max, $i) {
+                return $min + ($max - $min)*$i;
             }
-            echo '</svg>';
-            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+            //MAIN BODY (ordered in front to back layer)
 
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             //FAUCETS
@@ -184,8 +178,30 @@
             //FACTORS
             createArcs($factorRadii, $factorCount, $factorColors, $factorOpacity, $factorStroke, true);
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+            //MIDDLE CIRCLE IMAGE
             echo '<img src="' . $imagePath . '" alt="Image" style="pointer-events: none; position: absolute; left: '.$cx.'px; top: '. ($cy + 53) .'px; width: 400px; height: 400px; transform: translate(-50%, -50%);">';
+
+            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            //EMPTY CIRCLES
+            echo '<svg width="100%" height="100%" style="display:block;pointer-events: none; position:absolute;" id = "saliencesContainer0">';
+            
+            $f = 1 / 3;
+            for ($i = 0; $i <= 3; $i++) {
+                $thisRadius = lerp($realRadiusMin,$realRadiusMax,$f*$i);
+                echo '<circle cx="' . $cx . '" cy="' . ($cy + 6) . '" r="' . $thisRadius . '" fill="none" stroke="rgba(0, 0, 0, 0.2)" stroke-width="1" />';
+
+                echo '<text x="' . $cx . '" y="' . ($cy - $thisRadius - 10) . '" text-anchor="middle" fill="rgba(0, 0, 0, 0.2)" font-size="12">'.number_format($i * $f * 100, 0) . '%'.'</text>';
+            }
+            echo '</svg>';
+
+            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            //SIDE PERCENTAGES
+            echo '<svg width="100%" height="100%" style="display:block;pointer-events: none; position:absolute;" id = "saliencesContainer1">';
+            for ($i = 0; $i < $faucetCount; $i++) {
+                echo '<text x="40" y="'.(100+($i*25)).'" fill="'.$faucetColors[$i].'" stroke="#00000020" font-size="12">'.number_format($faucetPercents[$i]*100,0).'%</text>';
+                echo '<text x="80" y="'.(100+($i*25)).'" fill="'.$faucetColors[$i].'" stroke="#00000020" font-size="12">'.$faucetNames[$i].'</text>';
+            }
+            echo '</svg>';
 
         ?>
 
@@ -383,8 +399,6 @@
             }
 
         }
-
-        toggleContainer('saliencesContainer', -1);
 
     </script>
 

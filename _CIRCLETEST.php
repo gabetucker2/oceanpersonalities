@@ -14,7 +14,7 @@
 
             $imagePath = 'Images/CircleCenter.png';
 
-            $cx = 900; $cy = 400;//offset of whole circle
+            $cx = 900; $cy = 500;//offset of whole circle
             echo "<script>let cx = {$cx}; let cy = {$cy};</script>";
             $wholeRadius = 300;//radius boundary
 
@@ -27,12 +27,12 @@
             $salienceMin = 0.55; $salienceMax = 1;
 
             $factorCount = 5;
-            $factorOpacity = 1;
+            $factorOpacity = 0;
             $factorStroke = 0;
             $factorColors = array(
                 "#4000FF", "#FF5500", "#FFE600", "#34EBA4", "#FF0061"
             );
-            $factorMin = 0.55; $factorMax = 1;
+            $factorMin = 0.9; $factorMax = 1.5;
             $factorTime = 0.3;
             // $factorNames = array(
             //     "Openness", "Conscientiousness", "Extraversion", "Agreeableness", "Neuroticism"
@@ -57,7 +57,7 @@
                 "Anxiety", "Hostility", "Depression", "Self-Consciousness", "Impulsiveness", "Vulnerability"//n
             );
             $faucetMin = $factorMin; $faucetMax = $factorMax;
-            $faucetTime = 0.1;//in seconds
+            $faucetTime = 0.3;//in seconds
             $faucetRadii = array();//setup later
 
 
@@ -73,7 +73,7 @@
 
             //setup faucetRadii
             for ($i = 0; $i < $faucetCount; $i++) {
-                $numLevels = 3;
+                $numLevels = 100;
                 $randNum = rand(0, $numLevels - 1);
                 $percent = (($randNum)/($numLevels-1));
                 array_push($faucetRadii, $faucetMin + ($faucetMax - $faucetMin)*$percent);
@@ -97,7 +97,7 @@
 
             function createArcs($radii, $count, $colors, $opacity, $stroke, $isFactor) {
 
-                global $wholeRadius, $cx, $cy, $angle, $largeArcFlag, $sweepFlag, $faucetsInFactor, $faucetTime, $faucetNames, $imagePath;
+                global $wholeRadius, $cx, $cy, $angle, $largeArcFlag, $sweepFlag, $faucetsInFactor, $faucetTime, $faucetNames;
 
                 for ($i = 0; $i < $count; $i++) {
                 
@@ -154,8 +154,6 @@
                     if ($factorCondition || $faucetConditionEnd) {
                         echo '</svg>';
                     }
-
-                    echo '<img src="' . $imagePath . '" alt="Image" style="position: absolute; top: '.$cy.'px; left: '.$cx.'px; transform: translate(-50%, -50%);">';
                 
                 }
 
@@ -186,6 +184,8 @@
             //FACTORS
             createArcs($factorRadii, $factorCount, $factorColors, $factorOpacity, $factorStroke, true);
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+            echo '<img src="' . $imagePath . '" alt="Image" style="pointer-events: none; position: absolute; left: '.$cx.'px; top: '.$cy + 53 .'px; width: 400px; height: 400px; transform: translate(-50%, -50%);">';
 
         ?>
 
@@ -262,6 +262,11 @@
             i++;
         }
 
+        function ease(x) {
+            if ((x *= 2) < 1) return 0.5 * x * x;
+            return -0.5 * (--x * (x - 2) - 1);
+        }
+
         function slideArcs(outNotIn, seconds, idKey) {
 
             let intervals = animationFPS * seconds;
@@ -280,7 +285,8 @@
                 ivs[idKey] = setInterval(() => {
 
                     thisIntervals[idKey] += outNotIn ? 1 : -1;
-                    unitInterval = intervals == 0 ? 0 : (thisIntervals[idKey] / intervals > 0 ? Math.sqrt(thisIntervals[idKey] / intervals) : 0);
+                    unitInterval = ease(intervals == 0 ? 0 : (thisIntervals[idKey] / intervals > 0 ? Math.sqrt(thisIntervals[idKey] / intervals) : 0));
+
                     let prevP = {x: 0, y: 0};
 
                     for (let j = 0; j < currentFaucetTransforms[idKey].length; j++) {

@@ -12,6 +12,8 @@
             echo "<script>let animationFPS = 100;</script>";
             echo "<script>let textExtrusion = 20;</script>";
 
+            $imagePath = 'Images/CircleCenter.png';
+
             $cx = 900; $cy = 400;//offset of whole circle
             echo "<script>let cx = {$cx}; let cy = {$cy};</script>";
             $wholeRadius = 300;//radius boundary
@@ -32,9 +34,9 @@
             );
             $factorMin = 0.55; $factorMax = 1;
             $factorTime = 0.3;
-            $factorNames = array(
-                "Openness", "Conscientiousness", "Extraversion", "Agreeableness", "Neuroticism"
-            );
+            // $factorNames = array(
+            //     "Openness", "Conscientiousness", "Extraversion", "Agreeableness", "Neuroticism"
+            // );
             $factorRadii = array();//setup later
 
             $faucetCount = 30;//must be divisible by factorCount
@@ -95,7 +97,7 @@
 
             function createArcs($radii, $count, $colors, $opacity, $stroke, $isFactor) {
 
-                global $wholeRadius, $cx, $cy, $angle, $largeArcFlag, $sweepFlag, $faucetsInFactor, $faucetTime, $faucetNames, $factorNames;
+                global $wholeRadius, $cx, $cy, $angle, $largeArcFlag, $sweepFlag, $faucetsInFactor, $faucetTime, $faucetNames, $imagePath;
 
                 for ($i = 0; $i < $count; $i++) {
                 
@@ -143,14 +145,17 @@
                     if (!$isFactor) {
                         $text = strtolower($faucetNames[$i%count($faucetNames)]);
                         echo "<text x = '0' y = '0' opacity = '1' font-family = 'verdana' text-anchor = '".($i < $count/2 || $i == 15 || $i == 16 || $i == 17 ? 'start' : 'end')."' fill = '".$color."' stroke = '#000' stroke-width = '0.015vw' class = '_faucetText".$idKey."'>{$text}</text>";
-                    } else {
-                        $text = strtoupper($factorNames[$i%count($factorNames)]);
-                        echo "<text font-family = 'verdana' font-weight = 'bold' stroke = '#000' stroke-width = '0.05vw' x = '".($arcStartX+$arcEndX+$cx)/3 ."' y = '".($arcStartY+$arcEndY+$cy)/3 ."' opacity = '1' text-anchor = 'middle' fill = '#FFF'>{$text}</text>";
                     }
+                    // } else {
+                    //     $text = strtoupper($factorNames[$i%count($factorNames)]);
+                    //     echo "<text font-family = 'verdana' font-weight = 'bold' stroke = '#000' stroke-width = '0.05vw' x = '".($arcStartX+$arcEndX+$cx)/3 ."' y = '".($arcStartY+$arcEndY+$cy)/3 ."' opacity = '1' text-anchor = 'middle' fill = '#FFF'>{$text}</text>";
+                    // }
 
                     if ($factorCondition || $faucetConditionEnd) {
                         echo '</svg>';
                     }
+
+                    echo '<img src="' . $imagePath . '" alt="Image" style="position: absolute; top: '.$cy.'px; left: '.$cx.'px; transform: translate(-50%, -50%);">';
                 
                 }
 

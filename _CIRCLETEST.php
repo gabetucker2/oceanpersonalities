@@ -167,19 +167,7 @@
             }
 
 
-            //MAIN BODY (ordered in front to back layer)
-
-            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-            //FAUCETS
-            createArcs($faucetRadii, $faucetCount, $faucetColors, $faucetOpacity, $faucetStroke, false);
-            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-            
-            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-            //FACTORS
-            createArcs($factorRadii, $factorCount, $factorColors, $factorOpacity, $factorStroke, true);
-            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-            //MIDDLE CIRCLE IMAGE
-            echo '<img src="' . $imagePath . '" alt="Image" style="pointer-events: none; position: absolute; left: '.$cx.'px; top: '. ($cy + 53) .'px; width: 400px; height: 400px; transform: translate(-50%, -50%);">';
+            //MAIN BODY (ordered in back to front layer)
 
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             //EMPTY CIRCLES
@@ -198,10 +186,30 @@
             //SIDE PERCENTAGES
             echo '<svg width="100%" height="100%" style="display:block;pointer-events: none; position:absolute;" id = "saliencesContainer1">';
             for ($i = 0; $i < $faucetCount; $i++) {
-                echo '<text x="40" y="'.(100+($i*25)).'" fill="'.$faucetColors[$i].'" stroke="#00000020" font-size="12">'.number_format($faucetPercents[$i]*100,0).'%</text>';
-                echo '<text x="80" y="'.(100+($i*25)).'" fill="'.$faucetColors[$i].'" stroke="#00000020" font-size="12">'.$faucetNames[$i].'</text>';
+                echo '<text font-family = "verdana" x="40" y="'.(100+($i*25)).'" fill="'.$faucetColors[$i].'" stroke="#00000020" font-size="12">'.number_format($faucetPercents[$i]*100,0).'%</text>';
+                echo '<text font-family = "verdana" x="80" y="'.(100+($i*25)).'" fill="'.$faucetColors[$i].'" stroke="#00000020" font-size="12">'.$faucetNames[$i].'</text>';
             }
             echo '</svg>';
+
+            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            //SIDE PERCENTAGES
+            echo '<svg width="100%" height="100%" style="display:block;pointer-events: none; position:absolute;" id = "saliencesContainer1">';
+            for ($i = 0; $i < $factorCount; $i++) {
+                echo '<text font-family = "verdana" x="250" y="'.(175+($i*150)).'" fill="'.$factorColors[$i].'" stroke="#00000020" font-size="36">'.rand(1,3).'</text>';
+            }
+            echo '</svg>';
+
+            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            //FAUCETS
+            createArcs($faucetRadii, $faucetCount, $faucetColors, $faucetOpacity, $faucetStroke, false);
+            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            
+            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            //FACTORS
+            createArcs($factorRadii, $factorCount, $factorColors, $factorOpacity, $factorStroke, true);
+            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            //MIDDLE CIRCLE IMAGE
+            echo '<img src="' . $imagePath . '" alt="Image" style="pointer-events: none; position: absolute; left: '.$cx.'px; top: '. ($cy + 53) .'px; width: 400px; height: 400px; transform: translate(-50%, -50%);">';
 
         ?>
 

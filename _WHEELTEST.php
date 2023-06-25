@@ -1,34 +1,27 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Horizontal Eye Shape</title>
-  <style>
-    svg {
-      background-color: #f0f0f0;
-    }
-  </style>
-</head>
-<body>
-  <?php
-  // Define the SVG dimensions
-  $width = 300;
-  $height = 150;
-  ?>
-  <svg width="<?php echo $width; ?>" height="<?php echo $height; ?>">
-    <circle cx="<?php echo $width / 2; ?>" cy="<?php echo $height / 2; ?>" r="50" fill="#fff" stroke="#000" stroke-width="2" />
-    <script>
-      // JavaScript code to draw the eye shape
-      var svg = document.querySelector('svg');
-      var eyeWidth = <?php echo $width / 2; ?>;
-      var eyeHeight = <?php echo $height / 2; ?>;
+  <body style="margin: 0;">
+    <svg width="100%" height="100%" style="position: absolute; display: block; pointer-events: none;">
+      <?php
 
-      var eye = document.createElementNS("http://www.w3.org/2000/svg", "path");
-      eye.setAttribute("d", "M" + (eyeWidth - 40) + "," + eyeHeight + " q40,-40 80,0 q-40,40 -80,0");
-      eye.setAttribute("fill", "transparent");
-      eye.setAttribute("stroke", "#000");
-      eye.setAttribute("stroke-width", "2");
-      svg.appendChild(eye);
-    </script>
-  </svg>
-</body>
+        $eyeX = 600;
+        $eyeY = 700;
+
+        // upper padding
+        $eyeYTrans = -23;
+        $eyeVertRadius = 195;
+        $eyeHorizRadius = 460;
+        echo '<path d="M' . ($eyeX-$eyeHorizRadius) . ',' . ($eyeY+$eyeYTrans) . ' q' . ($eyeHorizRadius) . ',' . (-$eyeVertRadius) . ' ' . ($eyeHorizRadius * 2) . ',0 q' . (-$eyeHorizRadius) . ',' . ($eyeVertRadius) . ' ' . (-$eyeHorizRadius * 2) . ',0" fill="#000"></path>';
+
+        // main eyedrop
+        $eyeVertRadius = 150;
+        $eyeHorizRadius = 400;
+        echo '<path d="M' . ($eyeX-$eyeHorizRadius) . ',' . $eyeY . ' q' . $eyeHorizRadius . ',' . (-$eyeVertRadius) . ' ' . ($eyeHorizRadius * 2) . ',0 q' . (-$eyeHorizRadius) . ',' . $eyeVertRadius . ' ' . (-$eyeHorizRadius * 2) . ',0" fill="#4000FF"></path>';
+
+        // text on top
+        echo '<text font-family="verdana" font-weight="bold" font-size="40" x="' . ($eyeX-$eyeHorizRadius) + $eyeHorizRadius . '" y="' . $eyeY . '" text-anchor="middle" alignment-baseline="middle" fill="#FFFFFF">Openness</text>'
+
+      ?>
+    </svg>
+  </body>
 </html>

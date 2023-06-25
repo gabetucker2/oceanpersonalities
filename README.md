@@ -8,4 +8,4 @@ TODO:
 * Finish Circle
 * Make Wheel prototype
 
-[Visit it locally here](http://localhost/)
+[Visit it locally here](http://localhost/OceanPersonalities) after you get it set up under your local XAMPP/htdocs directory.

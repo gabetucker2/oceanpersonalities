@@ -14,7 +14,7 @@
 
             $imagePath = 'Images/CircleCenter.png';
 
-            $cx = 950; $cy = 500;//offset of whole circle
+            $cx = 1000; $cy = 500;//offset of whole circle
             echo "<script>let cx = {$cx}; let cy = {$cy};</script>";
             $wholeRadius = 300;//radius boundary
 
@@ -188,8 +188,8 @@
             //SIDE FAUCET PERCENTAGES
             echo '<svg width="100%" height="100%" style="display:block;pointer-events: none; position:absolute;">';
             for ($i = 0; $i < $faucetCount; $i++) {
-                echo '<text font-family = "verdana" x="40" y="'.(100+($i*25)).'" fill="'.$faucetColors[$i].'" stroke="#00000020" font-size="12">'.number_format($faucetPercents[$i]*100,0).'%</text>';
-                echo '<text font-family = "verdana" x="80" y="'.(100+($i*25)).'" fill="'.$faucetColors[$i].'" stroke="#00000020" font-size="12">'.$faucetNames[$i].'</text>';
+                echo '<text font-family = "verdana" x="30" y="'.(100+($i*25)).'" fill="'.$faucetColors[$i].'" stroke="#00000020" font-size="12">'.number_format($faucetPercents[$i]*100,0).'%</text>';
+                echo '<text font-family = "verdana" x="70" y="'.(100+($i*25)).'" fill="'.$faucetColors[$i].'" stroke="#00000020" font-size="12">'.$faucetNames[$i].'</text>';
             }
             echo '</svg>';
 
@@ -197,7 +197,8 @@
             //SIDE FACTOR PERCENTAGES
             echo '<svg width="100%" height="100%" style="display:block;pointer-events: none; position:absolute;">';
             for ($i = 0; $i < $factorCount; $i++) {
-                echo '<text font-family = "verdana" font-weight="bold" x="250" y="'.(175+($i*150)).'" fill="'.$factorColors[$i].'" stroke="transparent" font-size="36">'.substr($factorNames[$i],0,1).' '.number_format($factorPercents[$i]*100, 0).'%</text>';
+                echo '<text font-family = "verdana" font-weight="bold" x="250" y="'.(102+($i*150)).'" fill="'.$factorColors[$i].'" stroke="transparent" font-size="20">'.$factorNames[$i].'</text>';
+                echo '<text font-family = "verdana" font-weight="bold" x="250" y="'.(150+($i*150)).'" fill="'.$factorColors[$i].'" stroke="transparent" font-size="30">'.number_format($factorPercents[$i]*100, 0).'%</text>';
             }
             echo '</svg>';
 
@@ -237,7 +238,6 @@
             }
         }
 
-        let thisInterval = 0;
         let ivs = [];
         let ivs2 = [];
         let thisIntervals = [];
@@ -302,15 +302,19 @@
             let unitInterval = thisIntervals[idKey] / intervals;
             
             if (locks[idKey] == undefined) locks[idKey] = false;
-            
-            if (ivs.length <= idKey) ivs[idKey] = undefined;
-            else if (locks[idKey] == false)
+            if (ivs.length <= idKey)
+            {
+                ivs[idKey] = undefined;
+            } else if (locks[idKey] == false)
             {
                 clearInterval(ivs[idKey]);
 
                 ivs[idKey] = setInterval(() => {
 
                     thisIntervals[idKey] += outNotIn ? 1 : -1;
+                    if (thisIntervals[idKey] == -2) {
+                        thisIntervals[idKey] = -1;
+                    }
                     unitInterval = ease(intervals == 0 ? 0 : (thisIntervals[idKey] / intervals > 0 ? Math.sqrt(thisIntervals[idKey] / intervals) : 0));
 
                     let prevP = {x: 0, y: 0};

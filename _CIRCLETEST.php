@@ -152,8 +152,8 @@
 
                     if (!$isFactor) {
                         $text = strtolower($faucetNames[$i%count($faucetNames)]);
-                        echo "<rect class='_faucetText".$idKey."' width='140' height='40' x='0' y='0' fill='".$faucetColors[$i]."' style='fill-opacity: 1;' rx='10'></rect>";
-                        echo "<text class='_faucetText".$idKey."' x='50%' y='50%' font-family='Verdana' text-anchor='middle' dominant-baseline='central' fill='white'>{$text}</text>";
+                        echo "<rect class='_faucetTextBorder".$idKey."' width='140' height='40' x='0' y='0' fill='".$faucetColors[$i]."' style='fill-opacity: 1;' rx='10'></rect>";
+                        echo "<text class='_faucetText".$idKey."' x='50%' y='50%' font-family='Verdana' text-anchor='middle' dominant-baseline='central' fill='white' stroke='rgba(0, 0, 0, 0.2)' stroke-width='1'>{$text}</text>";
                         // echo "<text x='0' y='0' opacity='1' font-family='verdana' text-anchor='".($i < $count/2 || $i == 15 || $i == 16 || $i == 17 ? 'start' : 'end')."' fill='#FFF' class='_faucetText".$idKey."'>{$text}</text>";
                     }
                     // } else {
@@ -253,6 +253,7 @@
         while (true) {
             let theseArcs = document.getElementsByClassName("_faucets" + i);
             let theseTexts = document.getElementsByClassName("_faucetText" + i);
+            let theseTextBorders = document.getElementsByClassName("_faucetTextBorder" + i);
             if (theseArcs.length == 0) {
                 break;
             }
@@ -278,6 +279,7 @@
                 currentFaucetTransforms[i].push({
                     element: arc,
                     text: theseTexts[j],
+                    borders: theseTextBorders[j],
                     arcStartX: asx,
                     arcStartY: asy,
                     arcEndX: aex,
@@ -286,7 +288,7 @@
                 });
 
                 slideArcs(false, 0, i);
-
+                
                 j++;
             }
 
@@ -340,8 +342,6 @@
                             `
                         );
 
-                        faucet.text.setAttribute("opacity", unitInterval);
-
                         //see Desmos extrusion model for text:
                         let i = 999999;
                         let t = textExtrusion;
@@ -375,8 +375,12 @@
                         P.y += proximityYOffset;
                         prevP = P;
                         
+                        faucet.text.setAttribute("opacity", unitInterval);
                         faucet.text.setAttribute("x", P.x);
                         faucet.text.setAttribute("y", P.y);
+                        faucet.borders.setAttribute("opacity", unitInterval);
+                        faucet.borders.setAttribute("x", P.x - 50);
+                        faucet.borders.setAttribute("y", P.y - 20);
 
                     }
 

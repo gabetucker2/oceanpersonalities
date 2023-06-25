@@ -182,7 +182,7 @@
 
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             //SIDE PERCENTAGES
-            echo '<svg width="100%" height="100%" style="display:block;pointer-events: none; position:absolute;" id = "saliencesContainer1">';
+            echo '<svg width="100%" height="100%" style="display:block;pointer-events: none; position:absolute;">';
             for ($i = 0; $i < $faucetCount; $i++) {
                 echo '<text font-family = "verdana" x="40" y="'.(100+($i*25)).'" fill="'.$faucetColors[$i].'" stroke="#00000020" font-size="12">'.number_format($faucetPercents[$i]*100,0).'%</text>';
                 echo '<text font-family = "verdana" x="80" y="'.(100+($i*25)).'" fill="'.$faucetColors[$i].'" stroke="#00000020" font-size="12">'.$faucetNames[$i].'</text>';
@@ -191,7 +191,7 @@
 
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             //SIDE PERCENTAGES
-            echo '<svg width="100%" height="100%" style="display:block;pointer-events: none; position:absolute;" id = "saliencesContainer1">';
+            echo '<svg width="100%" height="100%" style="display:block;pointer-events: none; position:absolute;">';
             for ($i = 0; $i < $factorCount; $i++) {
                 echo '<text font-family = "verdana" x="250" y="'.(175+($i*150)).'" fill="'.$factorColors[$i].'" stroke="#00000020" font-size="36">'.rand(1,3).'</text>';
             }

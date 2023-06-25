@@ -34,12 +34,16 @@
         // line arrow
         $imagePath = "Images/Arrow.png";
         $arrowXOffset = -300;
-        $arrowWidth = 50;
-        echo '<img src="' . $imagePath . '" alt="Image" style="pointer-events: none; position: absolute; left: '.($eyeX+$arrowXOffset).'px; top: '. ($lineY) .'px; width: '.$arrowWidth.'px; height: auto; transform: translate(-50%, -50%);">';
+        $arrowYOffset = 5;
+        $arrowWidth = 35;
+        echo '<img src="' . $imagePath . '" alt="Image" style="pointer-events: none; position: absolute; left: '.($eyeX+$arrowXOffset).'px; top: '. ($lineY+$arrowYOffset) .'px; width: '.$arrowWidth.'px; height: auto; transform: translate(-50%, -50%);">';
 
         // buttons
+        $textYOffset = 50;
+        $textXOffsets = 100;
         for ($f = 0; $f < $factorCount; $f++) {
-          
+          $xTrans = ($f-2)*$textXOffsets;
+          echo '<text style="cursor: pointer; position: absolute;" font-family="verdana" font-weight="bold" font-size="40" x=' . ($eyeX+$xTrans+$eyeHorizRadius) . ' y=' . ($lineY+$textYOffset) . ' text-anchor="middle" alignment-baseline="middle" fill="#FFFFFF">'.$factorNames[$f].'</text>';
         }
 
       ?>

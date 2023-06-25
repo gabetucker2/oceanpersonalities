@@ -3,7 +3,7 @@
     <body style = "margin: 0;">
 
         <div>
-            <p onclick = "toggleContainer('saliencesContainer', -1);" style = "display: inline-block;cursor: pointer;">Toggle Saliences</p>
+            <p onclick = "toggleContainer('saliencesContainer', -1);" style = "display: inline-block; cursor: pointer;">Toggle Saliences</p>
         </div>
         
         <?PHP
@@ -14,7 +14,7 @@
 
             $imagePath = 'Images/CircleCenter.png';
 
-            $cx = 900; $cy = 500;//offset of whole circle
+            $cx = 950; $cy = 500;//offset of whole circle
             echo "<script>let cx = {$cx}; let cy = {$cy};</script>";
             $wholeRadius = 300;//radius boundary
 
@@ -28,26 +28,24 @@
 
             $factorOpacity = 0;
             $factorStroke = 0;
-            $factorColors = array("#4000FF", "#FF5500", "#FFE600", "#34EBA4", "#FF0061");
+            $factorColors = array("#FF0061", "#FF5500", "#FFE600", "#34EBA4", "#4000FF");
             $factorCount = count($factorColors);
             $factorMin = 0.8; $factorMax = 1.5;
             $factorTime = 0.3;
             $realRadiusMax = $wholeRadius * $factorMax;
             $realRadiusMin = $wholeRadius * $factorMin;
-            // $factorNames = array(
-            //     "Openness", "Conscientiousness", "Extraversion", "Agreeableness", "Neuroticism"
-            // );
+            $factorNames = array("Openness", "Conscientiousness", "Extraversion", "Agreeableness", "Neuroticism");
             $factorRadii = array();//setup later
 
             $faucetCount = 30;//must be divisible by factorCount
             $faucetOpacity = 1;
             $faucetStroke = 0;
             $faucetColors = array(
-                "#7a00ff", "#0079ff", "#000d1c", "#aaa9ff", "#00d2ff", "#5100ff",//o
-                "#ff6200", "#ff4300", "#ff9600", "#ff2900", "#1c0c00", "#ffbca9",//c
-                "#fff800", "#ffbf00", "#ffee00", "#a9aa9a", "#fff300", "#ffefa9",//e
-                "#00ffac", "#00ff11", "#9fff00", "#a9ffc5", "#585e5a", "#00ff5f",//a
-                "#ff008c", "#d8d3d6", "#ff00ba", "#ff0000", "#ffa9c0", "#ff0062",//n
+                "#6500A7", "#9C00C8", "#D500D8", "#E300A6", "#E3007F", "#FF0065",//o
+                "#FF0000", "#FF2900", "#FF4D00", "#FF7400", "#FF9A00", "#FFB000",//c
+                "#FFD100", "#FFE000", "#FFEC00", "#FCFF00", "#F1FF00", "#E2FF00",//e
+                "#C4FF00", "#97FF00", "#32FF00", "#00FF6B", "#00FFA0", "#00FFC5",//a
+                "#00F2FF", "#00B9E7", "#0075D3", "#0010C4", "#1B00B1", "#3D00A1",//n
             );
             $faucetNames = array(
                 "Fantasy", "Aesthetics", "Feelings", "Actions", "Ideas", "Values",//o
@@ -60,6 +58,7 @@
             $faucetTime = 0.3;//in seconds
             $faucetRadii = array();//setup later
             $faucetPercents = array();
+            $factorPercents = array();
 
             //ADDITIONAL SETUP
             $angle = 0;//rotation of the ellipse relative to x axis
@@ -78,6 +77,11 @@
                 $percent = (($randNum)/($numLevels-1));
                 array_push($faucetPercents, $percent);
                 array_push($faucetRadii, $faucetMin + ($faucetMax - $faucetMin)*$percent);
+            }
+            //setup factorPercents
+            $faucetsPerFactor = $faucetCount / $factorCount;
+            for ($f = 0; $f < $factorCount; $f++) {
+                array_push($factorPercents, array_sum(array_slice($faucetPercents, $faucetsPerFactor*$f, $faucetsPerFactor)) / $faucetsPerFactor);
             }
             
             //setup factorRadii
@@ -181,7 +185,7 @@
             echo '</svg>';
 
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-            //SIDE PERCENTAGES
+            //SIDE FAUCET PERCENTAGES
             echo '<svg width="100%" height="100%" style="display:block;pointer-events: none; position:absolute;">';
             for ($i = 0; $i < $faucetCount; $i++) {
                 echo '<text font-family = "verdana" x="40" y="'.(100+($i*25)).'" fill="'.$faucetColors[$i].'" stroke="#00000020" font-size="12">'.number_format($faucetPercents[$i]*100,0).'%</text>';
@@ -190,10 +194,10 @@
             echo '</svg>';
 
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-            //SIDE PERCENTAGES
+            //SIDE FACTOR PERCENTAGES
             echo '<svg width="100%" height="100%" style="display:block;pointer-events: none; position:absolute;">';
             for ($i = 0; $i < $factorCount; $i++) {
-                echo '<text font-family = "verdana" x="250" y="'.(175+($i*150)).'" fill="'.$factorColors[$i].'" stroke="#00000020" font-size="36">'.rand(1,3).'</text>';
+                echo '<text font-family = "verdana" font-weight="bold" x="250" y="'.(175+($i*150)).'" fill="'.$factorColors[$i].'" stroke="transparent" font-size="36">'.substr($factorNames[$i],0,1).' '.number_format($factorPercents[$i]*100, 0).'%</text>';
             }
             echo '</svg>';
 

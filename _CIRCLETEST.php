@@ -102,16 +102,18 @@
 
             function createArcs($radii, $count, $colors, $opacity, $stroke, $isFactor) {
 
-                global $wholeRadius, $cx, $cy, $angle, $largeArcFlag, $sweepFlag, $faucetsInFactor, $faucetTime, $faucetNames;
+                global $wholeRadius, $cx, $cy, $angle, $largeArcFlag, $sweepFlag, $faucetsInFactor, $faucetTime, $faucetNames, $faucetColors;
 
                 for ($i = 0; $i < $count; $i++) {
                 
                     /////////////////////////////////////set up math
+                    $edgeBuffer = 0.008;//buffer b to prevent white spaces from showing
+
                     $r = $wholeRadius * $radii[$i%count($radii)];//arc radius
                     $intervalSize = 2*pi()/$count;//arc length
                     $a = $intervalSize * $i;//[0, 2pi] //arc start point
                     $x1 = sin($a)*$r;//[-pi/2, pi/2]
-                    $b = $intervalSize * ($i + 1);//[0, 2pi] //arc end point
+                    $b = ($intervalSize * ($i + 1)+$edgeBuffer);//[0, 2pi] //arc end point
                     $x2 = sin($b)*$r;//[-pi/2, pi/2]
                     $y1 = 2*pi() - f($x1, $r, $a);//[-pi/2, pi/2] //(must invert y relative to the circle's diameter because svg has an inverted y axis)//////////TODO: fix
                     $y2 = 2*pi() - f($x2, $r, $b);//[-pi/2, pi/2]
@@ -142,14 +144,17 @@
                                 L {$cx}, {$cy}
                                 L {$arcStartX}, {$arcStartY}
                         ' fill = '{$color}' fill-opacity = '{$opacity}' stroke = '#000' stroke-width = '{$stroke}'
-                        ".($isFactor ? 'style = \'cursor: pointer; pointer-events: all;\' id = \'factorArc'.$idKey.'\' onclick = \'locks['.$idKey.'] = !locks['.$idKey.'];\' onmouseenter = \'slideArcs(true, '.$faucetTime.', '.$idKey.'); fadeElement("factorArc'.$idKey.'", '.$idKey.', true, 0.3)\' onmouseleave = \'slideArcs(false, '.$faucetTime.', '.$idKey.'); fadeElement("factorArc'.$idKey.'", '.$idKey.', false, 0.3)\'' : 'class = \'_faucets'.$idKey.'\'')." />";
+                        ".($isFactor ? 'style = \'cursor: pointer; pointer-events: all;\' id = \'factorArc'.$idKey.'\' onclick = \'locks['.$idKey.'] = !locks['.$idKey.'];\' onmouseenter = \'slideArcs(true, '.$faucetTime.', '.$idKey.');\' onmouseleave = \'slideArcs(false, '.$faucetTime.', '.$idKey.');\'' : 'class = \'_faucets'.$idKey.'\'')." />";
+                        // ".($isFactor ? 'style = \'cursor: pointer; pointer-events: all;\' id = \'factorArc'.$idKey.'\' onclick = \'locks['.$idKey.'] = !locks['.$idKey.'];\' onmouseenter = \'slideArcs(true, '.$faucetTime.', '.$idKey.'); fadeElement("factorArc'.$idKey.'", '.$idKey.', true, 0.3)\' onmouseleave = \'slideArcs(false, '.$faucetTime.', '.$idKey.'); fadeElement("factorArc'.$idKey.'", '.$idKey.', false, 0.3)\'' : 'class = \'_faucets'.$idKey.'\'')." />"; // IF YOU HAVE FACTOR FADING
                     
                     echo $isFactor ? '<script>thisArc = document.getElementById("factorArc'.$idKey.'");</script>' : '<script>thisArc = document.getElementsByClassName("_faucets'.$idKey.'")['.$i%$faucetsInFactor.'];</script>';
                     echo '<script>function heyy(c, a) { setTimeout(function() { c.prepend(a); }, 1); } heyy(thisContainer, thisArc); </script>';
 
                     if (!$isFactor) {
                         $text = strtolower($faucetNames[$i%count($faucetNames)]);
-                        echo "<text x = '0' y = '0' opacity = '1' font-family = 'verdana' text-anchor = '".($i < $count/2 || $i == 15 || $i == 16 || $i == 17 ? 'start' : 'end')."' fill = '".$color."' stroke = '#000' stroke-width = '0.01vw' class = '_faucetText".$idKey."'>{$text}</text>";
+                        echo "<rect class='_faucetText".$idKey."' width='140' height='40' x='0' y='0' fill='".$faucetColors[$i]."' style='fill-opacity: 1;' rx='10'></rect>";
+                        echo "<text class='_faucetText".$idKey."' x='50%' y='50%' font-family='Verdana' text-anchor='middle' dominant-baseline='central' fill='white'>{$text}</text>";
+                        // echo "<text x='0' y='0' opacity='1' font-family='verdana' text-anchor='".($i < $count/2 || $i == 15 || $i == 16 || $i == 17 ? 'start' : 'end')."' fill='#FFF' class='_faucetText".$idKey."'>{$text}</text>";
                     }
                     // } else {
                     //     $text = strtoupper($factorNames[$i%count($factorNames)]);
@@ -198,7 +203,7 @@
             echo '<svg width="100%" height="100%" style="display:block;pointer-events: none; position:absolute;">';
             for ($i = 0; $i < $factorCount; $i++) {
                 echo '<text font-family = "verdana" font-weight="bold" x="250" y="'.(102+($i*150)).'" fill="'.$factorColors[$i].'" stroke="transparent" font-size="20">'.$factorNames[$i].'</text>';
-                echo '<text font-family = "verdana" font-weight="bold" x="250" y="'.(150+($i*150)).'" fill="'.$factorColors[$i].'" stroke="transparent" font-size="30">'.number_format($factorPercents[$i]*100, 0).'%</text>';
+                echo '<text font-family = "verdana" font-weight="bold" x="250" y="'.(145+($i*150)).'" fill="'.$factorColors[$i].'" stroke="transparent" font-size="30">'.number_format($factorPercents[$i]*100, 0).'%</text>';
             }
             echo '</svg>';
 

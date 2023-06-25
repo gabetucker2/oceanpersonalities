@@ -26,12 +26,10 @@
             );
             $salienceMin = 0.55; $salienceMax = 1;
 
-            $factorCount = 5;
             $factorOpacity = 0;
             $factorStroke = 0;
-            $factorColors = array(
-                "#4000FF", "#FF5500", "#FFE600", "#34EBA4", "#FF0061"
-            );
+            $factorColors = array("#4000FF", "#FF5500", "#FFE600", "#34EBA4", "#FF0061");
+            $factorCount = count($factorColors);
             $factorMin = 0.8; $factorMax = 1.5;
             $factorTime = 0.3;
             $realRadiusMax = $wholeRadius * $factorMax;

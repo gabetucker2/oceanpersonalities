@@ -170,7 +170,7 @@
                         echo '<svg width="100%" height="100%" style="display:block;pointer-events: none; position:absolute;">';
                         $text = strtolower($faucetNames[$i%count($faucetNames)]);
                         // echo "<rect class='_faucetTextBorder".$idKey."' width='".(strlen($faucetNames[$i])*$borderOffsetPerLetter)."' height='25' x='0' y='0' fill='".$faucetColors[$i]."' style='fill-opacity: 1;' rx='6'></rect>";
-                        echo "<text class='_faucetText".$idKey."' x='50%' y='50%' font-family='arial' font-weight='bold' text-anchor='middle' dominant-baseline='central' font-size='15' fill='#000' stroke='#FFF' stroke-width='0'>".strtoupper($text)."</text>";
+                        echo "<text class='_faucetText".$idKey."' x='50%' y='50%' font-family='arial' font-weight='bold' text-anchor='middle' dominant-baseline='central' font-size='12' fill='#000' stroke='#FFF' stroke-width='0'>".strtoupper($text)."</text>";
                         echo '</svg>';
                     }
                 }
@@ -430,6 +430,8 @@
             }
 
         }
+
+        toggleContainer('saliencesContainer', -1);
 
     </script>
 

@@ -372,7 +372,7 @@
                         let mh = h(1) - bh;
 
                         let P = mh-mg == 0 ? {x: A.x, y: A.y} : {x: (bg-bh)/(mh-mg), y: (mh*bg - mg*bh)/(mh-mg)};
-                        let proximityYOffset = (Math.abs(prevP.y - P.y) <= 15) ? 20 : 0;
+                        let proximityYOffset = (Math.abs(prevP.y - P.y) <= 25) ? (P.y < cy ? -50 : 50) : 0;
                         P.y += proximityYOffset;
                         prevP = P;
                         

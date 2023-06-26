@@ -103,7 +103,7 @@
 
             function createArcs($radii, $count, $colors, $opacity, $stroke, $isFactor) {
 
-                global $borderOffsetPerLetter, $wholeRadius, $cx, $cy, $angle, $largeArcFlag, $sweepFlag, $faucetsInFactor, $faucetTime, $faucetNames, $faucetColors;
+                global $borderOffsetPerLetter, $wholeRadius, $cx, $cy, $angle, $largeArcFlag, $sweepFlag, $faucetsInFactor, $faucetTime, $faucetNames, $faucetColors, $faucetCount;
 
                 for ($i = 0; $i < $count; $i++) {
                 
@@ -151,12 +151,6 @@
                     echo $isFactor ? '<script>thisArc = document.getElementById("factorArc'.$idKey.'");</script>' : '<script>thisArc = document.getElementsByClassName("_faucets'.$idKey.'")['.$i%$faucetsInFactor.'];</script>';
                     echo '<script>function heyy(c, a) { setTimeout(function() { c.prepend(a); }, 1); } heyy(thisContainer, thisArc); </script>';
 
-                    if (!$isFactor) {
-                        $text = strtolower($faucetNames[$i%count($faucetNames)]);
-                        // echo "<rect class='_faucetTextBorder".$idKey."' width='".(strlen($faucetNames[$i])*$borderOffsetPerLetter)."' height='25' x='0' y='0' fill='".$faucetColors[$i]."' style='fill-opacity: 1;' rx='6'></rect>";
-                        echo "<text class='_faucetText".$idKey."' x='50%' y='50%' font-family='arial' font-weight='bold' text-anchor='middle' dominant-baseline='central' font-size='15' fill='#000' stroke='#FFF' stroke-width='0'>".strtoupper($text)."</text>";
-                        // echo "<text x='0' y='0' opacity='1' font-family='verdana' text-anchor='".($i < $count/2 || $i == 15 || $i == 16 || $i == 17 ? 'start' : 'end')."' fill='#FFF' class='_faucetText".$idKey."'>{$text}</text>";
-                    }
                     // } else {
                     //     $text = strtoupper($factorNames[$i%count($factorNames)]);
                     //     echo "<text font-family = 'verdana' font-weight = 'bold' stroke = '#000' stroke-width = '0.05vw' x = '".($arcStartX+$arcEndX+$cx)/3 ."' y = '".($arcStartY+$arcEndY+$cy)/3 ."' opacity = '1' text-anchor = 'middle' fill = '#FFF'>{$text}</text>";
@@ -166,6 +160,19 @@
                         echo '</svg>';
                     }
                 
+                }
+
+                if (!$isFactor)
+                {
+                    for ($i = 0; $i < $faucetCount; $i++) {
+                        $idKey = floor($i / $faucetsInFactor);//faucet is 0-5 => 0, 6-11 => 1, etc
+
+                        echo '<svg width="100%" height="100%" style="display:block;pointer-events: none; position:absolute;">';
+                        $text = strtolower($faucetNames[$i%count($faucetNames)]);
+                        // echo "<rect class='_faucetTextBorder".$idKey."' width='".(strlen($faucetNames[$i])*$borderOffsetPerLetter)."' height='25' x='0' y='0' fill='".$faucetColors[$i]."' style='fill-opacity: 1;' rx='6'></rect>";
+                        echo "<text class='_faucetText".$idKey."' x='50%' y='50%' font-family='arial' font-weight='bold' text-anchor='middle' dominant-baseline='central' font-size='15' fill='#000' stroke='#FFF' stroke-width='0'>".strtoupper($text)."</text>";
+                        echo '</svg>';
+                    }
                 }
 
             }

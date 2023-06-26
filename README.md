@@ -4,7 +4,6 @@ This is a newly-established github page for backing up oceanpersonalities.
 Short-Term TODO:
 * As it gets further up, offset y positively.
 * As it gets further down, offset y negatively.
-* Make text render in front
 
 Long-Term TODO:
 * Update site/database to have NEO PI-R compatibility.

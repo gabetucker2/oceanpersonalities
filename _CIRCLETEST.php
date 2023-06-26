@@ -10,7 +10,7 @@
 
             /////MAIN VARIABLES
             echo "<script>let animationFPS = 100;</script>";
-            echo "<script>let textExtrusion = 70;</script>";
+            echo "<script>let textExtrusion = 60;</script>";
             $borderOffsetPerLetter = 13;
 
             $imagePath = 'Images/CircleCenter.png';
@@ -42,11 +42,11 @@
             $faucetOpacity = 1;
             $faucetStroke = 0;
             $faucetColors = array(
-                "#6500A7", "#9C00C8", "#D500D8", "#E300A6", "#E3007F", "#FF0065",//o
+                "#9A00FF", "#C700FF", "#FB00FF", "#FF00BA", "#FF007B", "#FF0052",//o
                 "#FF0000", "#FF2900", "#FF4D00", "#FF7400", "#FF9A00", "#FFB000",//c
                 "#FFD100", "#FFE000", "#FFEC00", "#FCFF00", "#F1FF00", "#E2FF00",//e
-                "#C4FF00", "#97FF00", "#32FF00", "#00FF6B", "#00FFA0", "#00FFC5",//a
-                "#00F2FF", "#00B9E7", "#0075D3", "#0010C4", "#1B00B1", "#3D00A1",//n
+                "#C4FF00", "#97FF00", "#57FF00", "#00FF6B", "#00FFA0", "#00FFC5",//a
+                "#00F2FF", "#00CCFF", "#008DFF", "#0067FF", "#3200FF", "#6100FF",//n
             );
             $faucetNames = array(
                 "Fantasy", "Aesthetics", "Feelings", "Actions", "Ideas", "Values",//o
@@ -153,8 +153,8 @@
 
                     if (!$isFactor) {
                         $text = strtolower($faucetNames[$i%count($faucetNames)]);
-                        echo "<rect class='_faucetTextBorder".$idKey."' width='".(strlen($faucetNames[$i])*$borderOffsetPerLetter)."' height='25' x='0' y='0' fill='".$faucetColors[$i]."' style='fill-opacity: 1;' rx='6'></rect>";
-                        echo "<text class='_faucetText".$idKey."' x='50%' y='50%' font-family='arial' font-weight='bold' text-anchor='middle' dominant-baseline='central' font-size='15' fill='white' stroke='rgba(0, 0, 0, 1)' stroke-width='0.5'>".strtoupper($text)."</text>";
+                        // echo "<rect class='_faucetTextBorder".$idKey."' width='".(strlen($faucetNames[$i])*$borderOffsetPerLetter)."' height='25' x='0' y='0' fill='".$faucetColors[$i]."' style='fill-opacity: 1;' rx='6'></rect>";
+                        echo "<text class='_faucetText".$idKey."' x='50%' y='50%' font-family='arial' font-weight='bold' text-anchor='middle' dominant-baseline='central' font-size='15' fill='#000' stroke='#FFF' stroke-width='0'>".strtoupper($text)."</text>";
                         // echo "<text x='0' y='0' opacity='1' font-family='verdana' text-anchor='".($i < $count/2 || $i == 15 || $i == 16 || $i == 17 ? 'start' : 'end')."' fill='#FFF' class='_faucetText".$idKey."'>{$text}</text>";
                     }
                     // } else {
@@ -254,7 +254,7 @@
         while (true) {
             let theseArcs = document.getElementsByClassName("_faucets" + i);
             let theseTexts = document.getElementsByClassName("_faucetText" + i);
-            let theseTextBorders = document.getElementsByClassName("_faucetTextBorder" + i);
+            // let theseTextBorders = document.getElementsByClassName("_faucetTextBorder" + i);
             if (theseArcs.length == 0) {
                 break;
             }
@@ -280,7 +280,7 @@
                 currentFaucetTransforms[i].push({
                     element: arc,
                     text: theseTexts[j],
-                    borders: theseTextBorders[j],
+                    // borders: theseTextBorders[j],
                     arcStartX: asx,
                     arcStartY: asy,
                     arcEndX: aex,
@@ -379,9 +379,9 @@
                         faucet.text.setAttribute("opacity", unitInterval);
                         faucet.text.setAttribute("x", P.x);
                         faucet.text.setAttribute("y", P.y);
-                        faucet.borders.setAttribute("opacity", unitInterval);
-                        faucet.borders.setAttribute("x", P.x-(faucet.text.innerHTML.length) * <?php echo $borderOffsetPerLetter/2; ?> );
-                        faucet.borders.setAttribute("y", P.y-14);
+                        // faucet.borders.setAttribute("opacity", unitInterval);
+                        // faucet.borders.setAttribute("x", P.x-(faucet.text.innerHTML.length) * <?php /*echo $borderOffsetPerLetter/2;*/ ?> );
+                        // faucet.borders.setAttribute("y", P.y-14);
 
                     }
 

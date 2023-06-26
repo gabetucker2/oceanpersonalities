@@ -1,20 +1,21 @@
 <html>
 
-    <body style = "position: absolute; margin: 0; background: linear-gradient(to bottom, white, lightgrey);">
+    <body style = "margin: 0; background: linear-gradient(to bottom, white, lightgrey);">
 
         <div>
-            <p onclick = "toggleContainer('saliencesContainer', -1);" style = "display: inline-block; cursor: pointer; position: absolute;">Toggle Saliences</p>
+            <p onclick = "toggleContainer('saliencesContainer', -1);" style = "display: inline-block; cursor: pointer;">Toggle Saliences</p>
         </div>
         
         <?PHP
 
             /////MAIN VARIABLES
             echo "<script>let animationFPS = 100;</script>";
-            echo "<script>let textExtrusion = 60;</script>";
+            echo "<script>let textExtrusion = 70;</script>";
+            $borderOffsetPerLetter = 13;
 
             $imagePath = 'Images/CircleCenter.png';
 
-            $cx = 1000; $cy = 500;//offset of whole circle
+            $cx = 1000; $cy = 550;//offset of whole circle
             echo "<script>let cx = {$cx}; let cy = {$cy};</script>";
             $wholeRadius = 300;//radius boundary
 
@@ -102,7 +103,7 @@
 
             function createArcs($radii, $count, $colors, $opacity, $stroke, $isFactor) {
 
-                global $wholeRadius, $cx, $cy, $angle, $largeArcFlag, $sweepFlag, $faucetsInFactor, $faucetTime, $faucetNames, $faucetColors;
+                global $borderOffsetPerLetter, $wholeRadius, $cx, $cy, $angle, $largeArcFlag, $sweepFlag, $faucetsInFactor, $faucetTime, $faucetNames, $faucetColors;
 
                 for ($i = 0; $i < $count; $i++) {
                 
@@ -119,7 +120,6 @@
                     $y2 = 2*pi() - f($x2, $r, $b);//[-pi/2, pi/2]
                     $arcStartX = $x1 + $cx; $arcStartY = $y1 + $cy;//start point from which to draw eclipse
                     $arcEndX = $x2 + $cx; $arcEndY = $y2 + $cy;//new point for next command
-                    $borderOffsetPerLetter = 15;
 
                     /////////////////////////////////////render semicircle/texts
 
@@ -153,8 +153,8 @@
 
                     if (!$isFactor) {
                         $text = strtolower($faucetNames[$i%count($faucetNames)]);
-                        // echo "<rect class='_faucetTextBorder".$idKey."' width='".(strlen($faucetNames[$i])*$borderOffsetPerLetter)."' height='40' x='0' y='0' fill='".$faucetColors[$i]."' style='fill-opacity: 1;' rx='10'></rect>";
-                        echo "<text class='_faucetText".$idKey."' x='50%' y='50%' font-family='arial' font-weight='bold' text-anchor='middle' dominant-baseline='central' font-size='18' fill='".$faucetColors[$i]."' stroke='rgba(0, 0, 0, 0.2)' stroke-width='1'>".strtoupper($text)."</text>";
+                        echo "<rect class='_faucetTextBorder".$idKey."' width='".(strlen($faucetNames[$i])*$borderOffsetPerLetter)."' height='25' x='0' y='0' fill='".$faucetColors[$i]."' style='fill-opacity: 1;' rx='6'></rect>";
+                        echo "<text class='_faucetText".$idKey."' x='50%' y='50%' font-family='arial' font-weight='bold' text-anchor='middle' dominant-baseline='central' font-size='15' fill='white' stroke='rgba(0, 0, 0, 1)' stroke-width='0.5'>".strtoupper($text)."</text>";
                         // echo "<text x='0' y='0' opacity='1' font-family='verdana' text-anchor='".($i < $count/2 || $i == 15 || $i == 16 || $i == 17 ? 'start' : 'end')."' fill='#FFF' class='_faucetText".$idKey."'>{$text}</text>";
                     }
                     // } else {
@@ -254,7 +254,7 @@
         while (true) {
             let theseArcs = document.getElementsByClassName("_faucets" + i);
             let theseTexts = document.getElementsByClassName("_faucetText" + i);
-            // let theseTextBorders = document.getElementsByClassName("_faucetTextBorder" + i);
+            let theseTextBorders = document.getElementsByClassName("_faucetTextBorder" + i);
             if (theseArcs.length == 0) {
                 break;
             }
@@ -280,7 +280,7 @@
                 currentFaucetTransforms[i].push({
                     element: arc,
                     text: theseTexts[j],
-                    // borders: theseTextBorders[j],
+                    borders: theseTextBorders[j],
                     arcStartX: asx,
                     arcStartY: asy,
                     arcEndX: aex,
@@ -379,9 +379,9 @@
                         faucet.text.setAttribute("opacity", unitInterval);
                         faucet.text.setAttribute("x", P.x);
                         faucet.text.setAttribute("y", P.y);
-                        // faucet.borders.setAttribute("opacity", unitInterval);
-                        // faucet.borders.setAttribute("x", P.x-(faucet.text.innerHTML.length)*7.5);
-                        // faucet.borders.setAttribute("y", P.y-21);
+                        faucet.borders.setAttribute("opacity", unitInterval);
+                        faucet.borders.setAttribute("x", P.x-(faucet.text.innerHTML.length) * <?php echo $borderOffsetPerLetter/2; ?> );
+                        faucet.borders.setAttribute("y", P.y-14);
 
                     }
 
